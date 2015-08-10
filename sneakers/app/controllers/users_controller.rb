@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_login, :except => [:new, :create]
 
   def show
     @user = User.find params[:id]
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      sign_in(@user)
       flash[:success] = "Welcome, new user!"
       redirect_to @user
     else
@@ -22,6 +24,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end

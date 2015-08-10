@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   root 'users#new'
 
+  resource :session, only: [:new, :create, :destroy]
+  get 'login' => "sessions#new"
+  delete 'logout' => "sessions#destroy"
+
   resources :users, only: [:show, :new, :create] do
     resources :shoes, only: [:new, :create]
   end

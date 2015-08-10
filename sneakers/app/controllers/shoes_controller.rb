@@ -8,7 +8,7 @@ class ShoesController < ApplicationController
     @shoe = User.find(params[:user_id]).shoes.build(shoe_params)
     if @shoe.save
       flash[:success] = "New shoes, my favorite!"
-      redirect_to @shoe.user
+      redirect_to user_path(@shoe.user)
     else
       flash.now[:error] = "You're probably missing something."
       render :new
